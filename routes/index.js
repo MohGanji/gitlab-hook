@@ -7,7 +7,8 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next){
-    console.log(req.body);
+    console.log("---query: ", req.query);
+    console.log("---body: ", req.body);
     res.send(200, "Ok");
 });
 
