@@ -7,6 +7,8 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next){
+    console.log("---headers: ", req.headers);
+    console.log("---specific header: ", req.header("X-Gitlab-Token"));
     console.log("---query: ", req.query);
     console.log("---body: ", req.body);
     res.send(200, "Ok");
