@@ -1,6 +1,7 @@
+var exec = require('child_process').exec;
 var express = require('express');
 var router = express.Router();
-var configs = require('./configs.json');
+var configs = require('./../configs');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -12,15 +13,22 @@ router.post('/', function(req, res, next){
     var gitEvent = req.header("x-gitlab-event");
     var userEmail = req.body.user_email;
   
-    console.log(configs.secretToken);
-    console.log(serverToken, gitEvent, userEmail);
-    // if(serverToken != configs.secretToken)
-  
-    // console.log("---headers: ", req.headers);
-    // console.log("---specific header: ", req.header("X-Gitlab-Token"));
-    // console.log("---query: ", req.query);
-    // console.log("---body: ", req.body);
-    res.send(200, "Ok");
+    if(secterToken && serverToken != configs.secretToken){
+      res.send(403, "unAuthorized token");
+    }
+    var cmd = configs.shellCommand;
+    if(gitEvent == "Push Hook"){
+      new Promise(function(fulfill, reject){
+          var child = exec(cmd, function(error, stdout, stderr){
+          console.log("stdout: ", stdout);
+          console.log("stderr: ", stderr);
+          console.log("error: ", error);
+        });
+        fulfill();
+      }).then(res.send(200, "Ok"));
+    }
+
+    // res.send(200, "Ok");
 });
 
 module.exports = router;
