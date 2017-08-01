@@ -13,10 +13,10 @@ router.post('/', function(req, res, next){
     var gitEvent = req.header("x-gitlab-event");
     var userEmail = req.body.user_email;
   
-    if(secterToken && serverToken != configs.secretToken){
+    if(secretToken && serverToken != configs.secretToken){
       res.send(403, "unAuthorized token");
     }
-    var cmd = configs.shellCommand;
+    var cmd = "./../" + configs.shellCommand;
     if(gitEvent == "Push Hook"){
       new Promise(function(fulfill, reject){
           var child = exec(cmd, function(error, stdout, stderr){
