@@ -16,7 +16,7 @@ router.post('/', function(req, res, next){
     if(serverToken && serverToken != configs.secretToken){
       res.send(403, "unAuthorized token");
     }
-    var cmd = "bash ./../" + configs.shellCommand;
+    var cmd = configs.shellCommand;
     if(gitEvent == "Push Hook"){
       new Promise(function(fulfill, reject){
           var child = exec(cmd, function(error, stdout, stderr){
