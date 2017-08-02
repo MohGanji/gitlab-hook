@@ -3,8 +3,11 @@ A small node server to handle gitlab hooks for autopull in remote servers
 
 ## Usage
 #### 1. Clone
+clone the project into your server and install required npm packages
 ```
 remote$ git clone https://github.com/MohGanji/gitlab-hook.git
+remote$ cd gitlab-hook
+remote$ npm install
 ```
 #### 2. Configs
 you should edit the configs.json file, so that the fields have proper value:
