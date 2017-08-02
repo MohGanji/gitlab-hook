@@ -36,16 +36,17 @@ mocha
 stat=$?
 if [ $stat == 0 ]; then
 	echo "all tests passed successfully"
+	
+	# kill the previous instance of node server
+	pid=`cat /var/log/nodePID.log | cut -f2 -d' '`
+	kill -2 $pid
+
+	# run the updated node server on port 3000
+	PORT=3000 node /var/www/html/Server/bin/www >> /var/log/myProject.log 2>&1 & > /var/log/nodePID.log 2>&1 
 else
 	echo "$stat tests failed"
 fi
 
-# kill the previous instance of node server
-pid=`cat /var/log/nodePID.log | cut -f2 -d' '`
-kill -2 $pid
-
-# run the updated node server on port 3000
-PORT=3000 node /var/www/html/Server/bin/www >> /var/log/myProject.log 2>&1 & > /var/log/nodePID.log 2>&1 
 ```
 then make it executable:
 ```
